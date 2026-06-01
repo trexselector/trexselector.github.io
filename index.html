@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>T-Rex Selector</title>
+  <meta name="description" content="T-Rex Selector — website coming soon." />
+  <meta name="theme-color" content="#0b0f14" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="T-Rex Selector" />
+  <meta property="og:description" content="T-Rex Selector — website coming soon." />
+  <meta property="og:url" content="https://trexselector.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="T-Rex Selector" />
+  <meta name="twitter:description" content="T-Rex Selector — website coming soon." />
+
+  <!-- Inline SVG favicon (no binary asset needed) -->
+  <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🦖&lt;/text&gt;&lt;/svg&gt;" />
+
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --bg-2: #111a24;
+      --fg: #eaf2f8;
+      --muted: #8da3b5;
+      --accent: #ff7a45;
+      --accent-2: #ffd24d;
+      --ring: rgba(255, 122, 69, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      color: var(--fg);
+      background:
+        radial-gradient(1200px 700px at 50% -10%, var(--bg-2), transparent 60%),
+        radial-gradient(900px 600px at 85% 110%, rgba(255, 210, 77, 0.06), transparent 55%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      display: grid;
+      place-items: center;
+      min-height: 100svh;
+      padding: 6vmin;
+      overflow: hidden;
+    }
+
+    /* Subtle animated aurora behind the content */
+    .glow {
+      position: fixed;
+      inset: -20vmax;
+      z-index: 0;
+      background:
+        radial-gradient(40vmax 40vmax at 30% 30%, rgba(255, 122, 69, 0.16), transparent 60%),
+        radial-gradient(35vmax 35vmax at 70% 70%, rgba(255, 210, 77, 0.10), transparent 60%);
+      filter: blur(10px);
+      animation: drift 22s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(-3%, -2%, 0) scale(1); }
+      to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 38rem;
+      animation: rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: clamp(0.7rem, 0.6rem + 0.4vw, 0.8rem);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.5rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.02);
+      margin-bottom: 1.6rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-size: clamp(2.8rem, 1.5rem + 8vw, 6.5rem);
+      background: linear-gradient(120deg, var(--fg) 0%, var(--accent-2) 55%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    p.tagline {
+      margin: 1.3rem auto 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 0.9rem + 0.6vw, 1.25rem);
+      line-height: 1.6;
+      max-width: 32rem;
+    }
+
+    .rule {
+      width: 4.5rem;
+      height: 3px;
+      margin: 2.2rem auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px var(--ring);
+    }
+
+    footer {
+      position: fixed;
+      bottom: max(1.2rem, env(safe-area-inset-bottom));
+      left: 0;
+      right: 0;
+      z-index: 1;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow, main { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <main>
+    <span class="eyebrow">🦖 Coming soon</span>
+    <h1>T-Rex Selector</h1>
+    <p class="tagline">A new home is on the way. Details coming soon.</p>
+    <div class="rule" aria-hidden="true"></div>
+  </main>
+
+  <footer>trexselector.com</footer>
+</body>
+</html>
