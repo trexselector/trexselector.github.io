@@ -4,323 +4,106 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>T-Rex Selector</title>
-  <meta name="description" content="T-Rex Selector — website coming soon." />
-  <meta name="theme-color" content="#0b0f14" />
+  <meta name="description" content="T-Rex Selector — control the rate of false discoveries with finite-sample statistical guarantees." />
+  <meta name="theme-color" content="#070808" />
 
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="T-Rex Selector" />
-  <meta property="og:description" content="T-Rex Selector — website coming soon." />
+  <meta property="og:description" content="Control the rate of false discoveries with finite-sample statistical guarantees." />
   <meta property="og:url" content="https://trexselector.com" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="T-Rex Selector" />
-  <meta name="twitter:description" content="T-Rex Selector — website coming soon." />
+  <meta name="twitter:description" content="Control the rate of false discoveries with finite-sample statistical guarantees." />
 
   <!-- Inline SVG favicon (no binary asset needed) -->
   <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🦖&lt;/text&gt;&lt;/svg&gt;" />
 
   <style>
-    :root {
-      --bg: #0b0f14;
-      --bg-2: #111a24;
-      --fg: #eaf2f8;
-      --muted: #8da3b5;
-      --accent: #ff7a45;
-      --accent-2: #ffd24d;
-      --ring: rgba(255, 122, 69, 0.35);
+    :root{
+      --bg:#070808; --bg-2:#16191c; --fg:#e7f3ec; --muted:#7c8a82;
+      --accent:#00ffa6; --accent-2:#6af7ff; --ring:rgba(0,255,166,.4);
+      --accent-soft:rgba(0,255,166,.08); --glow-a:rgba(0,255,166,.2);
+      --title-hi:#7fffd2; --link:#38ffba; --link-line:rgba(0,255,166,.45);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
 
     * { box-sizing: border-box; }
-
     html { height: 100%; }
+    html, body { height: auto; }
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-        Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+        "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
       color: var(--fg);
-      background:
-        radial-gradient(1200px 700px at 50% -10%, var(--bg-2), transparent 60%),
-        radial-gradient(900px 600px at 85% 110%, rgba(255, 210, 77, 0.06), transparent 55%),
-        var(--bg);
+      background: var(--bg);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100svh;
-      padding: 4rem 6vmin 2rem;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100svh; padding: 4rem 6vmin 2rem;
     }
 
-    /* Subtle animated aurora behind the content */
-    .glow {
-      position: fixed;
-      inset: -20vmax;
-      z-index: 0;
-      background:
-        radial-gradient(40vmax 40vmax at 30% 30%, rgba(255, 122, 69, 0.16), transparent 60%),
-        radial-gradient(35vmax 35vmax at 70% 70%, rgba(255, 210, 77, 0.10), transparent 60%);
-      filter: blur(10px);
-      animation: drift 22s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
+    /* Faint CRT scanline texture */
+    body::after{content:""; position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.5;
+      background:repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.10) 2px 3px);}
 
-    @keyframes drift {
-      from { transform: translate3d(-3%, -2%, 0) scale(1); }
-      to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
-    }
+    main{position:relative; z-index:1; text-align:center; width:100%; max-width:48rem; margin:auto 0;
+      animation:rise 900ms cubic-bezier(.2,.7,.2,1) both;}
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-    main {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      width: 100%;
-      max-width: 48rem;
-      margin: auto 0;
-      animation: rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    }
+    h1{margin:0; font-weight:800; line-height:1.1; letter-spacing:-.02em; white-space:nowrap;
+      font-size:clamp(1.9rem,1.3rem+2.4vw,3.1rem); color:var(--accent);
+      background:linear-gradient(115deg, var(--title-hi) 0%, var(--accent) 62%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    p.lead{margin:1.6rem auto 0; color:#c6d4cc; font-size:clamp(1rem,.95rem+.3vw,1.12rem);
+      line-height:1.75; max-width:46rem; text-align:left;}
+    p.lead em{font-style:italic; color:var(--fg);}
+    p.lead a{color:var(--link); text-decoration:none; border-bottom:1px solid var(--link-line);
+      transition:color .15s ease, border-color .15s ease;}
+    p.lead a:hover{color:var(--accent); border-bottom-color:var(--accent);}
 
-    .eyebrow {
-      display: inline-block;
-      font-size: clamp(0.7rem, 0.6rem + 0.4vw, 0.8rem);
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0.5rem 0.9rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.02);
-      margin-bottom: 1.6rem;
-    }
+    .rule{width:100%; height:1px; margin:2.4rem 0 0; border:0;
+      background:linear-gradient(90deg, transparent, var(--accent) 10%, var(--accent) 90%, transparent);
+      opacity:.5; box-shadow:0 0 10px var(--glow-a);}
 
-    h1 {
-      margin: 0;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-      font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3.1rem);
-      background: linear-gradient(120deg, var(--fg) 0%, var(--accent-2) 55%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+    .libs{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:2.6rem;}
+    @media(max-width:620px){.libs{grid-template-columns:1fr;}}
+    .lib{display:flex; flex-direction:column; align-items:center; gap:.45rem; text-decoration:none; color:var(--fg);
+      padding:1.4rem 1rem; border:1px solid rgba(255,255,255,.1); border-radius:16px; background:rgba(255,255,255,.02);
+      transition:transform .16s ease, border-color .16s ease, background .16s ease;}
+    a.lib:hover{transform:translateY(-3px); border-color:var(--ring); background:var(--accent-soft);}
+    .lib-icon{display:flex; align-items:center; justify-content:center; height:46px; margin-bottom:.15rem;}
+    .lib-icon svg{height:100%; width:auto;}
+    .lib-name{font-family:var(--mono); font-size:.92rem; color:var(--fg);}
+    .lib-cta{font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted);}
+    .lib.disabled{cursor:default; opacity:.6;}
 
-    p.lead {
-      margin: 1.6rem auto 0;
-      color: #c4d2de;
-      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.12rem);
-      line-height: 1.75;
-      max-width: 46rem;
-      text-align: left;
-    }
+    .team{margin-top:3rem;}
+    .team-intro{margin:0 auto; max-width:40rem; color:var(--muted); font-size:clamp(.98rem,.93rem+.3vw,1.08rem); line-height:1.7;}
+    .team-photos{display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; margin-top:1.6rem;}
+    .team-photos img{width:54px; height:54px; border-radius:50%; object-fit:cover;
+      border:2px solid rgba(255,255,255,.12); box-shadow:0 2px 8px rgba(0,0,0,.3);
+      transition:transform .15s ease, border-color .15s ease;}
+    .team-photos a{line-height:0;}
+    .team-photos img:hover{transform:scale(1.08); border-color:var(--ring);}
 
-    p.lead em { font-style: italic; color: var(--fg); }
+    .pubs{margin-top:3rem;}
+    .pubs-title{margin:0 0 1.4rem; font-size:.8rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--muted);}
+    .pub-list{list-style:none; margin:0 auto; padding:0; max-width:44rem; text-align:left; display:flex; flex-direction:column; gap:1.1rem;}
+    .pub-list li{color:var(--muted); font-size:.95rem; line-height:1.6;}
+    .pub-list a{color:var(--link); text-decoration:none; border-bottom:1px solid var(--link-line);
+      transition:color .15s ease, border-color .15s ease;}
+    .pub-list a:hover{color:var(--accent); border-bottom-color:var(--accent);}
+    .pub-list a.pub-title{color:var(--fg); border-bottom-color:rgba(255,255,255,.2);}
+    .pub-list a.pub-title:hover{color:var(--accent); border-bottom-color:var(--link-line);}
 
-    p.lead a {
-      color: var(--accent-2);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255, 210, 77, 0.4);
-      transition: color 150ms ease;
-    }
-
-    p.lead a:hover { color: var(--accent); }
-
-    .rule {
-      width: 4.5rem;
-      height: 3px;
-      margin: 2.2rem auto 0;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 24px var(--ring);
-    }
-
-    .libs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 2.6rem;
-    }
-
-    @media (max-width: 620px) {
-      .libs { grid-template-columns: 1fr; }
-    }
-
-    .lib {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.45rem;
-      text-decoration: none;
-      color: var(--fg);
-      padding: 1.4rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.02);
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-    }
-
-    a.lib:hover {
-      transform: translateY(-3px);
-      border-color: var(--ring);
-      background: rgba(255, 122, 69, 0.06);
-    }
-
-    .lib-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 46px;
-      margin-bottom: 0.15rem;
-    }
-
-    .lib-icon svg {
-      height: 100%;
-      width: auto;
-    }
-
-    .lib-name {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.92rem;
-      color: var(--fg);
-    }
-
-    .lib-cta {
-      font-size: 0.78rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .lib.disabled {
-      cursor: default;
-      opacity: 0.6;
-    }
-
-    .team {
-      margin-top: 3rem;
-    }
-
-    .team-intro {
-      margin: 0 auto;
-      max-width: 40rem;
-      color: var(--muted);
-      font-size: clamp(0.98rem, 0.93rem + 0.3vw, 1.08rem);
-      line-height: 1.7;
-    }
-
-    .team-photos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
-      margin-top: 1.6rem;
-    }
-
-    .team-photos img,
-    .team-photos .avatar {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(160deg, #1b2733, #0e151d);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      transition: transform 150ms ease, border-color 150ms ease;
-    }
-
-    .team-photos img:hover,
-    .team-photos .avatar:hover {
-      transform: scale(1.08);
-      border-color: var(--ring);
-    }
-
-    .team-photos .avatar {
-      background-image:
-        linear-gradient(160deg, #1b2733, #0e151d),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235c7184'%3E%3Ccircle cx='12' cy='8.5' r='4'/%3E%3Cpath d='M3.5 21c0-4.5 4-7 8.5-7s8.5 2.5 8.5 7z'/%3E%3C/svg%3E");
-      background-size: cover, 62%;
-      background-position: center, center 60%;
-      background-repeat: no-repeat;
-    }
-
-    .pubs {
-      margin-top: 3rem;
-    }
-
-    .pubs-title {
-      margin: 0 0 1.4rem;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .pub-list {
-      list-style: none;
-      margin: 0 auto;
-      padding: 0;
-      max-width: 44rem;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-    }
-
-    .pub-list li {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .pub-list .pub-title {
-      color: var(--fg);
-      font-style: italic;
-    }
-
-    .pub-list a {
-      color: var(--accent-2);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255, 210, 77, 0.4);
-      transition: color 150ms ease, border-color 150ms ease;
-    }
-
-    .pub-list a:hover { color: var(--accent); }
-
-    .pub-list a.pub-title {
-      color: var(--fg);
-      border-bottom-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .pub-list a.pub-title:hover {
-      color: var(--accent-2);
-      border-bottom-color: rgba(255, 210, 77, 0.5);
-    }
-
-    footer {
-      position: relative;
-      z-index: 1;
-      margin-top: 2.5rem;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.8rem;
-      letter-spacing: 0.02em;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .glow, main { animation: none; }
-    }
+    footer{position:relative; z-index:1; margin-top:2.5rem; text-align:center; color:var(--muted); font-size:.8rem; letter-spacing:.02em;}
+    @media(prefers-reduced-motion:reduce){main{animation:none;}}
   </style>
 </head>
 <body>
-  <div class="glow" aria-hidden="true"></div>
-
   <main>
     <h1>T-Rex Selector</h1>
     <p class="lead">
@@ -378,8 +161,12 @@
         <a href="https://www.linkedin.com/in/daniel-palomar-8373a1b7" target="_blank" rel="noopener">
           <img src="photos/daniel-palomar.jpg" alt="Daniel Palomar on LinkedIn" loading="lazy">
         </a>
-        <img src="photos/fabian-scheidt.png" alt="" loading="lazy">
-        <img src="photos/taulant-koka.png" alt="" loading="lazy">
+        <a href="https://www.linkedin.com/in/fabian-scheidt-4b3675163" target="_blank" rel="noopener">
+          <img src="photos/fabian-scheidt.png" alt="Fabian Scheidt on LinkedIn" loading="lazy">
+        </a>
+        <a href="https://www.linkedin.com/in/taulant-koka-36a7971b6" target="_blank" rel="noopener">
+          <img src="photos/taulant-koka.png" alt="Taulant Koka on LinkedIn" loading="lazy">
+        </a>
         <img src="photos/arnau-vilella-pique.jpg" alt="" loading="lazy">
         <img src="photos/helena-mehler.png" alt="" loading="lazy">
         <img src="photos/christoph-loeser.png" alt="" loading="lazy">
