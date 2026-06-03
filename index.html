@@ -100,6 +100,10 @@
     .pub-list a.pub-title:hover{color:var(--accent); border-bottom-color:var(--link-line);}
 
     footer{position:relative; z-index:1; margin-top:2.5rem; text-align:center; color:var(--muted); font-size:.8rem; letter-spacing:.02em;}
+    footer a{color:var(--link); text-decoration:none; border-bottom:1px solid var(--link-line);
+      transition:color .15s ease, border-color .15s ease;}
+    footer a:hover{color:var(--accent); border-bottom-color:var(--accent);}
+    .footer-contact{margin:0 0 .5rem;}
     @media(prefers-reduced-motion:reduce){main{animation:none;}}
   </style>
 </head>
@@ -204,6 +208,9 @@
     </section>
   </main>
 
-  <footer>trexselector.com</footer>
+  <footer>
+    <p class="footer-contact"><a href="mailto:contact@trexselector.com">contact@trexselector.com</a></p>
+    trexselector.com
+  </footer>
 </body>
 </html>
