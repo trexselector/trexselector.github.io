@@ -68,6 +68,12 @@
       background:linear-gradient(90deg, transparent, var(--accent) 10%, var(--accent) 90%, transparent);
       opacity:.5; box-shadow:0 0 10px var(--glow-a);}
 
+    .demo{margin:2.6rem 0 0; text-align:center;}
+    .demo img{display:block; width:100%; height:auto; max-width:44rem; margin:0 auto;
+      background:#fff; border-radius:14px; border:1px solid rgba(255,255,255,.1);
+      box-shadow:0 6px 22px rgba(0,0,0,.45);}
+    p.lead + .demo{margin-top:.7rem;}   /* tighten gap between a figure and its intro line */
+
     .libs{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:2.6rem;}
     @media(max-width:620px){.libs{grid-template-columns:1fr;}}
     .lib{display:flex; flex-direction:column; align-items:center; gap:.45rem; text-decoration:none; color:var(--fg);
@@ -121,11 +127,45 @@
       Liu, and Zhu, 2016</a>).
     </p>
     <p class="lead">
+      The Lasso is arguably the most widely used method for variable selection but lacks
+      a false discovery control.
+    </p>
+    <p class="lead">
       The T-Rex Selector allows the user to control the rate of false discoveries, with
       rigorous finite-sample statistical guarantees grounded in martingale theory
       (<a href="https://doi.org/10.1016/j.sigpro.2025.109894" target="_blank" rel="noopener">Machkour,
       Muma, and Palomar, 2025</a>).
     </p>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <p class="lead">
+      This example illustrates how the Lasso produces false discoveries whereas
+      T-Rex controls them:
+    </p>
+
+    <figure class="demo">
+      <img src="images/single_realization_barplot.png"
+           alt="A single simulated dataset with n=100 observations and p=500 variables, only
+                three of which are truly relevant. Both the Lasso and the T-Rex Selector recover
+                all three true variables, but the Lasso additionally selects many false
+                discoveries while the T-Rex Selector selects none." />
+    </figure>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <p class="lead">
+      T-Rex provides the full trade-off of power vs false discovery rate:
+    </p>
+
+    <figure class="demo">
+      <img src="images/tradeoff_power_vs_fdr.png"
+           alt="Averaged over 100 simulated datasets (n=100, p=500): as its target false
+                discovery rate is varied, the T-Rex Selector traces a power-versus-false-discovery-rate
+                curve while keeping the false discovery rate low, whereas the Lasso (lambda.min and
+                lambda.1se) sits at much higher false discovery rates." />
+    </figure>
+
     <div class="rule" aria-hidden="true"></div>
 
     <nav class="libs" aria-label="T-Rex Selector libraries">

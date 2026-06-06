@@ -5,3 +5,6 @@
 .vscode/
 .idea/
 *.swp
+
+# Local analysis sources/data (R scripts, results) — not published to the site
+R-code/
