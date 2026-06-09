@@ -73,6 +73,7 @@
       background:#fff; border-radius:14px; border:1px solid rgba(255,255,255,.1);
       box-shadow:0 6px 22px rgba(0,0,0,.45);}
     p.lead + .demo{margin-top:.7rem;}   /* tighten gap between a figure and its intro line */
+    .demo--narrow img{max-width:36rem;}  /* keep this figure from spanning the full column */
 
     .libs{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:2.6rem;}
     @media(max-width:620px){.libs{grid-template-columns:1fr;}}
@@ -160,7 +161,7 @@
       T-Rex provides the full trade-off of power vs false discovery rate:
     </p>
 
-    <figure class="demo">
+    <figure class="demo demo--narrow">
       <img src="images/tradeoff_power_vs_fdr.png"
            alt="Averaged over 100 simulated datasets (n=100, p=500): as its target false
                 discovery rate is varied, the T-Rex Selector traces a power-versus-false-discovery-rate
