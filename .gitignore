@@ -8,3 +8,6 @@
 
 # Local analysis sources/data (R scripts, results) — not published to the site
 R-code/
+
+# Local design experiments / scratch pages — not published
+/versions/
